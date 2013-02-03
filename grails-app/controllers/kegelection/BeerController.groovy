@@ -21,6 +21,17 @@ class BeerController {
 
     def save() {
         def beerInstance = new Beer(params)
+
+        def l = request.getFile('logo')
+        def okcontents = ['image/jpeg', 'image/ppg', 'image/gif']
+        if(!okcontents.contains(l.getContentType())){
+          flash.message = "Logo must be one of ${okcontents}"
+          render(view: "create", model: [beerInstance: beerInstance])
+        }
+
+        beerInstance.logoType = l.getContentType()
+
+
         if (!beerInstance.save(flush: true)) {
             render(view: "create", model: [beerInstance: beerInstance])
             return
@@ -98,5 +109,18 @@ class BeerController {
             flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'beer.label', default: 'Beer'), id])
             redirect(action: "show", id: id)
         }
+    }
+
+    def logo_image = {
+        def beer = Beer.get(params.id)
+        if (!beer || !beer.logo) {
+            response.sendError(404)
+            return;
+        }
+        response.setContentType(beer.logoType)
+        response.setContentLength(beer.logo.size())
+        OutputStream out = response.getOutputStream();
+        out.write(beer.logo);
+        out.close();
     }
 }

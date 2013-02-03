@@ -6,6 +6,7 @@ class Beer {
     name(blank:false, maxSize:128)
     style(blank: false)
     description(maxSize: 512)
+    logo(nullable: true, maxSize: 1024 * 1024)
   }
 
   String name
@@ -15,6 +16,8 @@ class Beer {
   Date createdTimestamp
   String updatedBy
   Date updatedTimestamp
+  byte[] logo
+  String logoType
 
   String toString(){
     return name

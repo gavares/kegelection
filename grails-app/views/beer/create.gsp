@@ -26,9 +26,11 @@
 				</g:eachError>
 			</ul>
 			</g:hasErrors>
-			<g:form action="save" >
+			<g:form action="save"  enctype="multipart/form-data">
 				<fieldset class="form">
-					<g:render template="form"/>
+					<g:render template="form" been="${beerInstance}"/>
+          <label for="logo">Logo (1 MB)</label>
+          <input type="file" name="logo" id="logo" />
 				</fieldset>
 				<fieldset class="buttons">
 					<g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" />

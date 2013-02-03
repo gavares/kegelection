@@ -52,9 +52,12 @@
 			
 				<g:if test="${beerInstance?.name}">
 				<li class="fieldcontain">
+          <g:if test="${beerInstance?.logo}">
+            <img class="logo-small" src="${createLink(controller:'beer', action:'logo_image', id:beerInstance.ident())}" />
+          </g:if>
+
 					<span id="name-label" class="property-label"><g:message code="beer.name.label" default="Name" /></span>
-					
-						<span class="property-value" aria-labelledby="name-label"><g:fieldValue bean="${beerInstance}" field="name"/></span>
+          <span class="property-value" aria-labelledby="name-label"><g:fieldValue bean="${beerInstance}" field="name"/></span>
 					
 				</li>
 				</g:if>
